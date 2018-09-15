@@ -76,12 +76,7 @@ public class HelperTest {
                 "  <heading>Reminder</heading>\n" +
                 "  <body>Don't forget me this weekend!</body>\n" +
                 "</note>";
-        String actual = helper.prettifyResponse("<note>\n" +
-                "<to>Tove</to>\n" +
-                "<from>Jani</from>\n" +
-                "<heading>Reminder</heading>\n" +
-                "<body>Don't forget me this weekend!</body>\n" +
-                "</note>");
+        String actual = helper.prettifyResponse("<note><to>Tove</to><from>Jani</from><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>");
         Assert.assertEquals(expected,actual);
     }
 }
