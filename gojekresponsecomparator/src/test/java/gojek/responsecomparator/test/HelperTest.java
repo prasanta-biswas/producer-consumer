@@ -79,4 +79,13 @@ public class HelperTest {
         String actual = helper.prettifyResponse("<note><to>Tove</to><from>Jani</from><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>");
         Assert.assertEquals(expected,actual);
     }
+
+    @Test
+    public void testPrettifyResponseWithPlainString()
+    {
+        Helper helper = Helper.getInstance();
+        String expected = "Prasanta Biswas";
+        String actual = helper.prettifyResponse("Prasanta Biswas");
+        Assert.assertEquals(expected,actual);
+    }
 }
