@@ -58,7 +58,7 @@ public class Helper {
         }
     }
 
-    private String prettifyResponse(String response){
+    public String prettifyResponse(String response){
         try {
             String result = prettifyJson(response);
             return result;
@@ -79,7 +79,7 @@ public class Helper {
 
     }
 
-    private String prettifyJson(String jsonString){
+    public String prettifyJson(String jsonString){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonParser jsonParser = new JsonParser();
         JsonElement jsonElement = jsonParser.parse(jsonString);
@@ -87,7 +87,7 @@ public class Helper {
         return formattedJson;
     }
 
-    private String prettifyXml(String xml) throws ParserConfigurationException, IOException, SAXException {
+    public String prettifyXml(String xml) throws ParserConfigurationException, IOException, SAXException {
 
         DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document doc = db.parse(new InputSource(new StringReader(xml)));
