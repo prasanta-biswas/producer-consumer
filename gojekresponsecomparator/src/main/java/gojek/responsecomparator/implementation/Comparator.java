@@ -14,13 +14,13 @@ import java.io.IOException;
 public class Comparator implements IComparator<String,String>{
     private File file1;
     private File file2;
+    boolean isEqual;
     private Helper utility = Helper.getInstance();
 
     public boolean isEqual() {
         return isEqual;
     }
 
-    boolean isEqual;
     public boolean compare(String url1, String url2) {
         try{
             String response1 = utility.getResponse(url1);
