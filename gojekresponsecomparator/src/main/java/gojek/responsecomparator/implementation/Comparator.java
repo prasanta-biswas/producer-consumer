@@ -1,6 +1,7 @@
 package gojek.responsecomparator.implementation;
 
 import gojek.responsecomparator.specification.IComparator;
+import gojek.responsecomparator.utility.Helper;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
@@ -13,6 +14,7 @@ import java.io.IOException;
 public class Comparator implements IComparator<String,String>{
     private File file1;
     private File file2;
+    private Helper utility = Helper.getInstance();
 
     public boolean isEqual() {
         return isEqual;
@@ -20,7 +22,17 @@ public class Comparator implements IComparator<String,String>{
 
     boolean isEqual;
     public boolean compare(String url1, String url2) {
-        return false;
+        try{
+            String response1 = utility.getResponse(url1);
+            String response2 = utility.getResponse(url2);
+            if(response1.equals(response2))
+                return isEqual = true;
+            else
+                return isEqual = false;
+        }
+        catch (IOException e) {
+            return isEqual = false;
+        }
     }
 
     public void getData(String filePath1, String filePath2) {
