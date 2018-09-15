@@ -52,4 +52,17 @@ public class HelperTest {
             Assert.assertEquals(expected,e.getMessage());
         }
     }
+
+    @Test
+    public void testPrettifyResponseWithJSON(){
+        Helper helper = Helper.getInstance();
+        String expected = "{\n" +
+                "  \"userId\": 1,\n" +
+                "  \"id\": 1,\n" +
+                "  \"title\": \"delectus aut autem\",\n" +
+                "  \"completed\": false\n" +
+                "}";
+        String actual = helper.prettifyResponse("{\"userId\": 1,\"id\": 1,\"title\": \"delectus aut autem\",\"completed\": false}");
+        Assert.assertEquals(expected,actual);
+    }
 }
