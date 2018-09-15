@@ -65,4 +65,23 @@ public class HelperTest {
         String actual = helper.prettifyResponse("{\"userId\": 1,\"id\": 1,\"title\": \"delectus aut autem\",\"completed\": false}");
         Assert.assertEquals(expected,actual);
     }
+
+    @Test
+    public void testPrettifyResponseWithXML(){
+        Helper helper = Helper.getInstance();
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<note>\n" +
+                "  <to>Tove</to>\n" +
+                "  <from>Jani</from>\n" +
+                "  <heading>Reminder</heading>\n" +
+                "  <body>Don't forget me this weekend!</body>\n" +
+                "</note>";
+        String actual = helper.prettifyResponse("<note>\n" +
+                "<to>Tove</to>\n" +
+                "<from>Jani</from>\n" +
+                "<heading>Reminder</heading>\n" +
+                "<body>Don't forget me this weekend!</body>\n" +
+                "</note>");
+        Assert.assertEquals(expected,actual);
+    }
 }
