@@ -100,7 +100,7 @@ public class Helper {
         Writer outxml = new StringWriter();
         XMLSerializer serializer = new XMLSerializer(outxml, format);
         serializer.serialize(doc);
-
-        return outxml.toString();
+        String result = outxml.toString();
+        return result.substring(0,result.lastIndexOf("\n"));
     }
 }
