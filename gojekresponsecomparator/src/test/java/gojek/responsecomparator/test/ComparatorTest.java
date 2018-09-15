@@ -18,7 +18,9 @@ public class ComparatorTest {
 
     @Test
     public void testGetData(){
-
+        Comparator comparator = new Comparator();
+        comparator.getData("abc.txt","xyz.txt");
+        Assert.assertTrue(comparator.isEqual());
     }
 
 }
