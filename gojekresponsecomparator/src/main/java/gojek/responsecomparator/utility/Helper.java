@@ -36,7 +36,7 @@ public class Helper {
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new RuntimeException("Failed : HTTP error code : " + connection.getResponseCode());
             }
-            return IOUtils.toString(connection.getInputStream()).replaceAll("\b", "").replaceAll("\n", "");
+            return IOUtils.toString(connection.getInputStream());
         } finally {
             connection.disconnect();
         }
