@@ -1,3 +1,5 @@
+package gojek.responsecomparator;
+
 import gojek.responsecomparator.implementation.Comparator;
 import gojek.responsecomparator.specification.IComparator;
 
