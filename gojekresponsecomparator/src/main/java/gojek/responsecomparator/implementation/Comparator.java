@@ -24,7 +24,7 @@ public class Comparator implements IComparator<String,String>{
     private String url1;
     private String url2;
     private Helper utility = Helper.getInstance();
-    private static final int NUMBER_OF_CONSUMER = 2;
+    private static final int NUMBER_OF_CONSUMER = 10;
     private static final int QUEUE_SIZE = 10;
     private static BlockingQueue<Comparator> queue;
     private static Thread producerThread;
