@@ -32,7 +32,7 @@ Run the following maven command to build your project
 
 Once build process finishes, run the following command with two file paths as arguments
 
-`java -cp target/response-comparator-*.jar gojek.responsecomparator.Main /path/to/file1 /path/to/file2`  # replace * with your jar version 
+`java -cp target/response-comparator-1.0.0-SNAPSHOT.jar gojek.responsecomparator.Main /path/to/file1 /path/to/file2`   
 
 ##### Sample output
 ```
