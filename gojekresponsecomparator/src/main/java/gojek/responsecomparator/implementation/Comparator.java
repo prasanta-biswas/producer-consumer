@@ -4,8 +4,6 @@ import gojek.responsecomparator.processor.Consumer;
 import gojek.responsecomparator.processor.Producer;
 import gojek.responsecomparator.specification.IComparator;
 import gojek.responsecomparator.utility.Helper;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.LineIterator;
 
 import java.io.File;
 import java.io.IOException;
@@ -82,8 +80,8 @@ public class Comparator implements IComparator<String,String>{
         queue = new LinkedBlockingDeque<>(QUEUE_SIZE);
         threadCollections = new ArrayList<>();
 
-        createAndStartReader();
-        createAndStartProcessor();
+        createAndStartProducer();
+        createAndStartConsumer();
 
         for(Thread t: threadCollections){
             try {
@@ -114,14 +112,14 @@ public class Comparator implements IComparator<String,String>{
             System.out.println(error);
     }
 
-    private void createAndStartReader() {
+    private void createAndStartProducer() {
         Producer producer = new Producer(file1,file2,queue);
-        producerThread = new Thread(producer,"reader");
+        producerThread = new Thread(producer,"producer");
         producerThread.start();
         threadCollections.add(producerThread);
     }
 
-    private void createAndStartProcessor() {
+    private void createAndStartConsumer() {
         for(int i = 0; i < NUMBER_OF_CONSUMER; i++){
             Thread consumerThread = new Thread(new Consumer(queue), "consumer-"+i);
             threadCollections.add(consumerThread);
