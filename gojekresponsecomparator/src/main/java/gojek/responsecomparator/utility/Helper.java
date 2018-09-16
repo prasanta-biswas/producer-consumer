@@ -1,24 +1,9 @@
 package gojek.responsecomparator.utility;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
-import org.apache.commons.io.IOUtils;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
 import javax.net.ssl.HttpsURLConnection;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -51,56 +36,19 @@ public class Helper {
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new RuntimeException("Failed : HTTP error code : " + connection.getResponseCode());
             }
-            String response = prettifyResponse(IOUtils.toString(connection.getInputStream()));
-            return response;
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            String response = "";
+            while ((inputLine = in.readLine()) != null)
+            {
+                response = response + inputLine;
+            }
+            in.close();
+            response = response.replaceAll("\n","").replaceAll("\r","")
+                    .replaceAll("\t","").replaceAll("\b","");
+            return response.toString();
         } finally {
             connection.disconnect();
         }
-    }
-
-    public String prettifyResponse(String response){
-        try {
-            String result = prettifyJson(response);
-            return result;
-        }
-        catch (Exception e){
-
-        }
-
-        try {
-            String result = prettifyXml(response);
-            return result;
-        }
-        catch (Exception e){
-
-        }
-
-        return response;
-
-    }
-
-    public String prettifyJson(String jsonString){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonParser jsonParser = new JsonParser();
-        JsonElement jsonElement = jsonParser.parse(jsonString);
-        String formattedJson = gson.toJson(jsonElement);
-        return formattedJson;
-    }
-
-    public String prettifyXml(String xml) throws ParserConfigurationException, IOException, SAXException {
-
-        DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        Document doc = db.parse(new InputSource(new StringReader(xml)));
-
-        OutputFormat format = new OutputFormat(doc);
-        format.setIndenting(true);
-        format.setIndent(2);
-        format.setOmitXMLDeclaration(false);
-        format.setLineWidth(Integer.MAX_VALUE);
-        Writer outxml = new StringWriter();
-        XMLSerializer serializer = new XMLSerializer(outxml, format);
-        serializer.serialize(doc);
-        String result = outxml.toString();
-        return result.substring(0,result.lastIndexOf("\n"));
     }
 }
