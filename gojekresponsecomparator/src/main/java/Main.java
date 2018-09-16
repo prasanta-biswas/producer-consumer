@@ -7,9 +7,17 @@ import gojek.responsecomparator.specification.IComparator;
 public class Main {
 
     private static final IComparator<String, String> COMPARATOR = new Comparator();
+
     public static void main(String [] args){
-//        COMPARATOR.getData("/Users/prasantabiswas/Downloads/LoadTest/user.csv","/Users/prasantabiswas/Downloads/LoadTest/user.csv");
-        COMPARATOR.getData("/Users/prasantabiswas/Desktop/file1.txt", "/Users/prasantabiswas/Desktop/file2.txt");
+        if(args.length == 0) {
+            System.out.println("No argument specified.");
+            return;
+        }
+        else if(args.length < 2) {
+            System.out.println("Requires two file paths as argument. One argument specified.");
+            return;
+        }
+        COMPARATOR.getData(args[0],args[1]);
     }
 
 }
