@@ -21,8 +21,10 @@ public class Consumer implements Runnable {
             Comparator comparator = queue.poll();
             if(comparator == null && !Comparator.isProducerAlive())
                 return;
-            comparator.compare(comparator.getUrl1(), comparator.getUrl2());
-            comparator.display();
+            if(comparator != null) {
+                comparator.compare(comparator.getUrl1(), comparator.getUrl2());
+                comparator.display();
+            }
         }
     }
 }
