@@ -1,4 +1,4 @@
-package gojek.responsecomparator.test;
+package gojek.responsecomparator;
 
 import gojek.responsecomparator.utility.Helper;
 import org.junit.Assert;
