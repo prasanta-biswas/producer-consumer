@@ -27,6 +27,7 @@ public class Comparator implements IComparator<String,String>{
     private static final int NUMBER_OF_CONSUMER = 2;
     private static final int QUEUE_SIZE = 10;
     private static BlockingQueue<Comparator> queue;
+    private static Thread producerThread;
     private static Collection<Thread> threadCollections;
 
     public boolean isEqual() {
@@ -102,7 +103,7 @@ public class Comparator implements IComparator<String,String>{
 
     private void createAndStartReader() {
         Producer producer = new Producer(file1,file2,queue);
-        Thread producerThread = new Thread(producer,"reader");
+        producerThread = new Thread(producer,"reader");
         producerThread.start();
         threadCollections.add(producerThread);
     }
@@ -113,5 +114,12 @@ public class Comparator implements IComparator<String,String>{
             threadCollections.add(consumerThread);
             consumerThread.start();
         }
+    }
+
+    public static boolean isProducerAlive(){
+        if(producerThread.isAlive())
+            return true;
+        else
+            return false;
     }
 }
