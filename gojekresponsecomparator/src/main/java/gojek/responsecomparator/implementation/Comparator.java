@@ -23,6 +23,7 @@ public class Comparator implements IComparator<String,String>{
     boolean isEqual;
     private String url1;
     private String url2;
+    private String error;
     private Helper utility = Helper.getInstance();
     private static final int NUMBER_OF_CONSUMER = 10;
     private static final int QUEUE_SIZE = 100;
@@ -50,18 +51,27 @@ public class Comparator implements IComparator<String,String>{
         this.url2 = url2;
     }
 
+    public String getError(){
+        return error;
+    }
+
+    public void setError(String error){
+        this.error = error;
+    }
+
     @Override
     public boolean compare(String url1, String url2) {
         try{
             String response1 = utility.getResponse(url1);
             String response2 = utility.getResponse(url2);
             if(response1.equals(response2))
-                return isEqual = true;
+                return this.isEqual = true;
             else
-                return isEqual = false;
+                return this.isEqual = false;
         }
         catch (IOException e) {
-            return isEqual = false;
+            this.error = e.getMessage();
+            return this.isEqual = false;
         }
     }
 
@@ -93,12 +103,15 @@ public class Comparator implements IComparator<String,String>{
     @Override
     public void display()
     {
-        if(isEqual){
-            System.out.println(url1+" equals "+url2);
+        if(error == null) {
+            if (isEqual) {
+                System.out.println(url1 + " equals " + url2);
+            } else {
+                System.out.println(url1 + " not equals " + url2);
+            }
         }
-        else{
-            System.out.println(url1+" not equals "+url2);
-        }
+        else
+            System.out.println(error);
     }
 
     private void createAndStartReader() {
