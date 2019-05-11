@@ -1,4 +1,4 @@
-package gojek.responsecomparator.processor;
+package gojek.responsecomparator.handlers;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -7,7 +7,7 @@ import com.google.gson.JsonParser;
 
 import java.util.*;
 
-public class JsonProcessor {
+public class JsonHandler {
 
     static JsonParser parser = new JsonParser();
 
