@@ -16,9 +16,9 @@ public class HelperTest {
     @Test
     public void testHTTPSResponse(){
         String url = "https://reqres.in/api/users/1";
-        String expected = "{\"data\":{\"id\":1,\"first_name\":\"George\",\"last_name\":\"Bluth\",\"avatar\":\"https://s3.amazonaws.com/uifaces/faces/twitter/calebogden/128.jpg\"}}";
+        String expected = "{\"data\":{\"id\":1,\"email\":\"george.bluth@reqres.in\",\"first_name\":\"George\",\"last_name\":\"Bluth\",\"avatar\":\"https://s3.amazonaws.com/uifaces/faces/twitter/calebogden/128.jpg\"}}";
         try {
-            String actual = helper.getResponse(url);
+            String actual = helper.getResponse(url).asString();
             Assert.assertEquals(expected,actual);
         }
         catch (IOException e){
@@ -29,9 +29,14 @@ public class HelperTest {
     @Test
     public void testHTTPResponse(){
         String url = "http://jsonplaceholder.typicode.com/todos/1";
-        String expected = "{  \"userId\": 1,  \"id\": 1,  \"title\": \"delectus aut autem\",  \"completed\": false}";
+        String expected = "{\n" +
+                "  \"userId\": 1,\n" +
+                "  \"id\": 1,\n" +
+                "  \"title\": \"delectus aut autem\",\n" +
+                "  \"completed\": false\n" +
+                "}";
         try {
-            String actual = helper.getResponse(url);
+            String actual = helper.getResponse(url).asString();
             Assert.assertEquals(expected,actual);
         }
         catch (IOException e){
