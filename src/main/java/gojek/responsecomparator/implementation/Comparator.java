@@ -1,12 +1,14 @@
 package gojek.responsecomparator.implementation;
 
+import gojek.responsecomparator.handlers.XmlHandler;
 import gojek.responsecomparator.processor.Consumer;
+import gojek.responsecomparator.handlers.JsonHandler;
 import gojek.responsecomparator.processor.Producer;
 import gojek.responsecomparator.specification.IComparator;
 import gojek.responsecomparator.utility.Helper;
+import io.restassured.response.Response;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.BlockingQueue;
@@ -29,10 +31,6 @@ public class Comparator implements IComparator<String,String>{
     private static Thread producerThread;
     private static Collection<Thread> threadCollections;
 
-    public boolean isEqual() {
-        return isEqual;
-    }
-
     public String getUrl1() {
         return url1;
     }
@@ -49,25 +47,23 @@ public class Comparator implements IComparator<String,String>{
         this.url2 = url2;
     }
 
-    public String getError(){
-        return error;
-    }
-
-    public void setError(String error){
-        this.error = error;
-    }
-
     @Override
     public boolean compare(String url1, String url2) {
         try{
-            String response1 = utility.getResponse(url1);
-            String response2 = utility.getResponse(url2);
-            if(response1.equals(response2))
-                return this.isEqual = true;
+            Boolean result = false;
+            Response response1 = utility.getResponse(url1);
+            Response response2 = utility.getResponse(url2);
+
+            if(response1.contentType().contains("json") && response2.contentType().contains("json"))
+                result = JsonHandler.compareJson(response1,response2);
+            else if(response1.contentType().contains("xml") && response2.contentType().contains("xml"))
+                result = XmlHandler.compareXml(response1,response2);
             else
-                return this.isEqual = false;
+                this.error = "Content type mismatch";
+
+            return result;
         }
-        catch (IOException e) {
+        catch (Exception e) {
             this.error = e.getMessage();
             return this.isEqual = false;
         }
