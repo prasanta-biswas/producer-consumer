@@ -2,6 +2,7 @@ package gojek.responsecomparator.processor;
 
 import gojek.responsecomparator.implementation.Comparator;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
@@ -25,9 +26,13 @@ public class Producer implements Runnable{
     public void run() {
         Scanner fileReader1 = null;
         Scanner filerReader2 = null;
+        FileInputStream inputStream1 = null;
+        FileInputStream inputStream2 = null;
         try {
-            fileReader1 = new Scanner(file1, "UTF-8");
-            filerReader2 = new Scanner(file2, "UTF-8");
+            inputStream1 = new FileInputStream(file1);
+            inputStream2 = new FileInputStream(file2);
+            fileReader1 = new Scanner(inputStream1, "UTF-8");
+            filerReader2 = new Scanner(inputStream2, "UTF-8");
 
             while (fileReader1.hasNextLine() && filerReader2.hasNextLine()) {
                 Comparator comparator = new Comparator();
@@ -38,6 +43,16 @@ public class Producer implements Runnable{
         } catch (InterruptedException | IOException e) {
             System.out.println("Error occurred: "+e);
         } finally {
+            if(inputStream1 != null) {
+                try {
+                    inputStream1.close();
+                }catch (IOException e){}
+            }
+            if(inputStream2 != null) {
+                try {
+                    inputStream2.close();
+                }catch (IOException e){}
+            }
             if(fileReader1 != null)
                 fileReader1.close();
             if(filerReader2 != null)
