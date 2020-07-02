@@ -11,17 +11,7 @@ import java.io.IOException;
  */
 public class Helper {
 
-    private static final Helper instance = new Helper();
-
-    private Helper() {
-
-    }
-
-    public static Helper getInstance(){
-        return instance;
-    }
-
-    public Response getResponse(String urlString) throws IOException {
+    public static Response getResponse(String urlString) throws IOException {
         RequestSpecification httpRequest = RestAssured.given();
         Response response = httpRequest.get(urlString);
         return response;

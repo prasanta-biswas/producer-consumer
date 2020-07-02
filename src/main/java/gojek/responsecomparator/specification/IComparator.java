@@ -1,10 +1,11 @@
 package gojek.responsecomparator.specification;
 
+import gojek.responsecomparator.model.Data;
+
 /**
  * Created by prasantabiswas on 15/09/18.
  */
 public interface IComparator<X,Y> {
-    public boolean compare(X url1, X url2);
-    public void getData(Y filePath1, Y filePath2);
-    public void display();
+    public void setSource(X x, Y y);
+    public boolean compare(X x, Y y);
 }

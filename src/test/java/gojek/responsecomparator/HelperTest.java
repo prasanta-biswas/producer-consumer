@@ -11,14 +11,12 @@ import java.io.IOException;
  */
 public class HelperTest {
 
-    Helper helper = Helper.getInstance();
-
     @Test
     public void testHTTPSResponse(){
         String url = "https://reqres.in/api/users/1";
-        String expected = "{\"data\":{\"id\":1,\"email\":\"george.bluth@reqres.in\",\"first_name\":\"George\",\"last_name\":\"Bluth\",\"avatar\":\"https://s3.amazonaws.com/uifaces/faces/twitter/calebogden/128.jpg\"}}";
+        String expected = "{\"data\":{\"id\":1,\"email\":\"george.bluth@reqres.in\",\"first_name\":\"George\",\"last_name\":\"Bluth\",\"avatar\":\"https://s3.amazonaws.com/uifaces/faces/twitter/calebogden/128.jpg\"},\"ad\":{\"company\":\"StatusCode Weekly\",\"url\":\"http://statuscode.org/\",\"text\":\"A weekly newsletter focusing on software development, infrastructure, the server, performance, and the stack end of things.\"}}";
         try {
-            String actual = helper.getResponse(url).asString();
+            String actual = Helper.getResponse(url).asString();
             Assert.assertEquals(expected,actual);
         }
         catch (IOException e){
@@ -36,7 +34,7 @@ public class HelperTest {
                 "  \"completed\": false\n" +
                 "}";
         try {
-            String actual = helper.getResponse(url).asString();
+            String actual = Helper.getResponse(url).asString();
             Assert.assertEquals(expected,actual);
         }
         catch (IOException e){
